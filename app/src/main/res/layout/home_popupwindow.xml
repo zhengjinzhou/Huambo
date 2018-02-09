@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="popupControl"
+            type="com.agewnet.huambo.ui.MainActivity.PopupControl"/>
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_popup_border"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawablePadding="5dp"
+                android:onClick="@{()->popupControl.MailList()}"
+                android:text="通讯录"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#a1DDDDDD"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawablePadding="5dp"
+                android:onClick="@{()->popupControl.Cancellation()}"
+                android:text="注销"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#a1DDDDDD"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="10dp"
+                android:drawablePadding="5dp"
+                android:onClick="@{()->popupControl.Signout()}"
+                android:text="退出"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="loginBean"
+            type="com.agewnet.huambo.entity.LoginBean" />
+
+        <variable
+            name="presenter"
+            type="com.agewnet.huambo.presenter.LoginPresenter" />
+
+        <import type="android.text.InputType" />
+
+        <import type="android.view.View" />
+
+        <import type="com.agewnet.huambo.R" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:background="@drawable/login_bg"
+        android:paddingTop="50dp"
+        tools:context="com.agewnet.huambo.ui.LoginActivity">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_logo" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="万维博通"
+            android:textColor="#fff"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="智慧政务管理平台"
+            android:textColor="#fff"
+            android:textSize="24sp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/login_input_border"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iv_login_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/login_user" />
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="40dp"
+                android:layout_toRightOf="@id/iv_login_user"
+                android:background="@null"
+                android:ellipsize="end"
+                android:hint="请输入用户名"
+                android:inputType="text"
+                android:maxLines="1"
+                android:text="@={loginBean.userName}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:onClick="@{presenter.clearAccount}"
+                android:padding="@dimen/dp_2"
+                android:src="@drawable/login_user_clear" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_input_border"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            >
+
+            <ImageView
+                android:id="@+id/iv_login_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/login_pass" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="40dp"
+                android:layout_toRightOf="@id/iv_login_pass"
+                android:background="@null"
+                android:ellipsize="end"
+                android:hint="请输入密码"
+                android:inputType="@{loginBean.passWordIsVisible?InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD:InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD}"
+                android:maxLines="1"
+                android:text="@={loginBean.userPass}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:onClick="@{()->presenter.togglePassShowType()}"
+                android:padding="@dimen/dp_2"
+                android:src="@{loginBean.passWordIsVisible?@drawable/login_user_pass_show:@drawable/login__user_pass_visible}" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <CheckBox
+                android:theme="@style/My_CheckBox"
+                android:textColor="#fff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:checked="@={loginBean.rememberAccount}"
+                android:text="记住账号" />
+
+            <CheckBox
+                android:theme="@style/My_CheckBox"
+                android:textColor="#fff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:checked="@={loginBean.autoLogin}"
+                android:text="自动登录" />
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/login_sign_border"
+            android:onClick="@{()->presenter.loginNameByPass(loginBean)}"
+            android:padding="0dp"
+            android:text="登\t录"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:onClick="@{presenter.starVPN}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/loginsetting" />
+
+                <TextView
+                    android:textColor="#fff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VPN设置" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>
