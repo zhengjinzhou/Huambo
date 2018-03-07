@@ -11,9 +11,13 @@ public interface RequestApi {
      * http://120.86.117.106/DMS_Phone
      *
 
+     http://sljoa.dg //水务局
      http://www.dgluqiao.com/DMS_Phone
+
+     http://19.108.192.125//塘厦
      */
     String BASE_URL = "http://19.108.192.125";
+
     /**
      * 登录路径
      */

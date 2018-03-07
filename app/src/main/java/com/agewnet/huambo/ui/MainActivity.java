@@ -10,7 +10,9 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -139,11 +141,29 @@ public class MainActivity extends AppCompatActivity {
         mWebView.setWebChromeClient(mWebChromeClient);
         //加载并获取添加头部信息
         mWebView.loadUrl(mHttpUrl);
+        mWebView.setDownloadListener(new MyWebViewDownLoadListener());
         //初始化Popup
         mPopupWindow = PopupUtil.showTipPopupWindow(this, R.layout.home_popupwindow, contentView -> {
             HomePopupwindowBinding mHomePopupwindowBinding = DataBindingUtil.bind(contentView);
             mHomePopupwindowBinding.setPopupControl(new PopupControl());
         });
+    }
+
+    /**
+     * 如果要实现文件下载的功能，需要设置WebView的DownloadListener，通过实现自己的DownloadListener来实现文件的下载
+     */
+    private class MyWebViewDownLoadListener implements DownloadListener {
+        @Override
+        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+            Log.i("tag", "url="+url);
+            Log.i("tag", "userAgent="+userAgent);
+            Log.i("tag", "contentDisposition="+contentDisposition);
+            Log.i("tag", "mimetype="+mimetype);
+            Log.i("tag", "contentLength="+contentLength);
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
     }
 
     //ChromeClient
@@ -262,31 +282,15 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> mPopupWindow.showAsDropDown(mActivityMainBinding.vTop), 200L);
     }
 
-    //单击返回
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
-            mWebView.goBack();
-        } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitBy2Click();
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();//返回上一页面
+                return true;
+            }
         }
-        return false;
-    } //记录用户首次点击返回键的时间
-    private long firstTime = 0;
-
-    /**
-     * 双击退出函数
-     */
-    private static Boolean isExit = false;
-
-    private void exitBy2Click() {
-        long secondTime = System.currentTimeMillis();
-        if (secondTime - firstTime > 2000) {
-            ToolToast.success("再按一次退出程序");
-            firstTime = secondTime;
-        } else {
-            finish();
-        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

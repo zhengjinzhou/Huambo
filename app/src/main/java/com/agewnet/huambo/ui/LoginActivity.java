@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         mLoginBean = new LoginBean();
         mProgressDialog = new ProgressDialog(this);
         LoginBean tempLogin = (LoginBean) UserCache.getSingleton(this).getObject(CommonConstant.USER_LOGINCACHE, LoginBean.class);
-        Log.d("", "initView: "+tempLogin.toString());
+       // Log.d("", "initView: "+tempLogin.toString());
 
         if (null != tempLogin) {
             if (tempLogin.isRememberAccount()) {
