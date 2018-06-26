@@ -23,8 +23,6 @@ public interface LoginContract {
         void vpnLogin();
 
         void clientLogin(LoginBean loginBean);
-
-
     }
 
     abstract class Presenter extends BasePresenter {

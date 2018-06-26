@@ -1,5 +1,6 @@
 package com.agewnet.huambo.app;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.agewnet.huambo.entity.VPNLoginBean;
 import com.agewnet.huambo.util.BaseTaskSwitch;
@@ -78,6 +80,7 @@ public class HuamBoApplication extends Application {
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -134,7 +137,7 @@ public class HuamBoApplication extends Application {
         /**
          * 请求权限
          */
-        if (null != mVPNLoginBean) {
+            Log.d("到这里2", "vpnLogin: ");
             String server = "mobile.dg.cn";
             mVPNLoginBean = (VPNLoginBean) UserCache.getSingleton(mHuamBoApplication).getObject(CommonConstant.USER_VPN_LOGINCACHE, VPNLoginBean.class);
             String username = mVPNLoginBean.getVpnAccount();
@@ -146,7 +149,6 @@ public class HuamBoApplication extends Application {
             start(server, 443, username, userPwd, "", "",
                     VPNManager.VpnFlag.VPN_FLAG_HTTP_PROXY
                             | VPNManager.VpnFlag.VPN_FLAG_SOCK_PROXY);
-        }
     }
 
     /**

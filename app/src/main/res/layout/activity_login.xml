@@ -23,33 +23,36 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/login_bg"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:background="@drawable/login_bg"
         android:paddingTop="50dp"
         tools:context="com.agewnet.huambo.ui.LoginActivity">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/login_logo" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="万维博通"
-            android:textColor="#fff"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+            android:src="@drawable/login_logo"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="智慧政务管理平台"
+            android:layout_marginTop="10dp"
+            android:text="@string/title_header"
             android:textColor="#fff"
-            android:textSize="24sp" />
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_content"
+            android:textColor="#fff"
+            android:textSize="28sp" />
 
 
         <RelativeLayout
@@ -101,8 +104,7 @@
             android:background="@drawable/login_input_border"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp"
-            >
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/iv_login_pass"
@@ -140,23 +142,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
+
             <CheckBox
-                android:theme="@style/My_CheckBox"
-                android:textColor="#fff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:checked="@={loginBean.rememberAccount}"
-                android:text="记住账号" />
+                android:text="记住账号"
+                android:textColor="#fff"
+                android:theme="@style/My_CheckBox" />
 
             <CheckBox
-                android:theme="@style/My_CheckBox"
-                android:textColor="#fff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:checked="@={loginBean.autoLogin}"
-                android:text="自动登录" />
+                android:text="自动登录"
+                android:textColor="#fff"
+                android:theme="@style/My_CheckBox" />
 
         </RelativeLayout>
 
@@ -170,6 +173,7 @@
             android:text="登\t录"
             android:textColor="@color/white"
             android:textSize="18sp" />
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -192,10 +196,10 @@
                     android:src="@drawable/loginsetting" />
 
                 <TextView
-                    android:textColor="#fff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="VPN设置" />
+                    android:text="VPN设置"
+                    android:textColor="#fff" />
             </LinearLayout>
         </RelativeLayout>
 

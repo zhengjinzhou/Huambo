@@ -30,5 +30,11 @@ public class ResponseLoginBean {
         this.Message = Message;
     }
 
-
+    @Override
+    public String toString() {
+        return "ResponseLoginBean{" +
+                "Result=" + Result +
+                ", Message='" + Message + '\'' +
+                '}';
+    }
 }

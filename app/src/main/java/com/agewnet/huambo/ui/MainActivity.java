@@ -112,36 +112,37 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 mPopupWindow.showAsDropDown(mActivityMainBinding.titleBar.ivTitleBarRightImg);
             }
-
         });
         //获取路径
         if (!TextUtils.isEmpty(getIntent().getStringExtra(CommonConstant.MAIN_HTTPURL))) {
             mHttpUrl = getIntent().getStringExtra(CommonConstant.MAIN_HTTPURL);
         }
-        //适配
+
         mWebView.getSettings().setUseWideViewPort(true);
         mWebView.getSettings().setLoadWithOverviewMode(true);
-        //加载JavaScript
-        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);//加载JavaScript
+
         //设置可以支持缩放
         //设置支持缩放
         mWebView.getSettings().setBuiltInZoomControls(true);
-
         mWebView.getSettings().setSupportZoom(true);
-        mWebView.getSettings().setTextSize(WebSettings.TextSize.NORMAL);
-
-        // 为图片添加放大缩小功能
-        mWebView.getSettings().setUseWideViewPort(true);
 
         mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
         mWebView.addJavascriptInterface(new HuamboJsInterface(), "contact");
-        //WebViewClient
-        mWebView.setWebViewClient(mWebViewClient);
-        //WebChromeClient
+
+        mWebView.setWebViewClient(mWebViewClient);//这个一定要设置，要不然不会再本应用中加载
         mWebView.setWebChromeClient(mWebChromeClient);
-        //加载并获取添加头部信息
+        mWebView.getSettings().setSupportZoom(true);
+        //清除缓存
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        this.deleteDatabase("WebView.db");
+        this.deleteDatabase("WebViewCache.db");
+        mWebView.clearCache(true);
+        mWebView.clearFormData();
+        getCacheDir().delete();
         mWebView.loadUrl(mHttpUrl);
         mWebView.setDownloadListener(new MyWebViewDownLoadListener());
+
         //初始化Popup
         mPopupWindow = PopupUtil.showTipPopupWindow(this, R.layout.home_popupwindow, contentView -> {
             HomePopupwindowBinding mHomePopupwindowBinding = DataBindingUtil.bind(contentView);

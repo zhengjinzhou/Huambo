@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
                 android:gravity="center"
-                android:text="智慧政务管理平台"
+                android:text="移动办公系统"
                 android:textColor="#faf908"
                 android:textSize="36sp"
                 android:textStyle="bold" />
@@ -97,8 +97,8 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColorHint="#555"
-                    android:text="@={vpnLogin.vpnAccount}" />
+                    android:text="@={vpnLogin.vpnAccount}"
+                    android:textColorHint="#555" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -115,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#999" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,8 +132,6 @@
                     android:src="@drawable/login_pass" />
 
                 <EditText
-                    android:singleLine="true"
-                    android:textColorHint="#555"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -143,8 +142,10 @@
                     android:hint="vpn密码"
                     android:inputType="@{vpnLogin.passWordIsVisible?InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD:InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD}"
                     android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@={vpnLogin.vpnPassWord}"
 
-                    android:text="@={vpnLogin.vpnPassWord}" />
+                    android:textColorHint="#555" />
 
 
                 <ImageView
@@ -155,20 +156,20 @@
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
                     android:onClick="@{()->presenter.togglePassShowType()}"
-                    android:src="@{vpnLogin.passWordIsVisible?@drawable/login_user_pass_show:@drawable/login__user_pass_visible}"
-                    />
+                    android:src="@{vpnLogin.passWordIsVisible?@drawable/login_user_pass_show:@drawable/login__user_pass_visible}" />
             </RelativeLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#999" />
 
             <LinearLayout
-                android:padding="@dimen/dp_20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:padding="@dimen/dp_20"
                 android:visibility="@{TextUtils.isEmpty(vpnLogin.vpnAccount) ||TextUtils.isEmpty(vpnLogin.vpnAccount) ?View.GONE:View.VISIBLE }">
 
                 <TextView
@@ -181,6 +182,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp">
+
                     <CheckBox
                         style="@style/My_CheckBox"
                         android:layout_width="wrap_content"
@@ -195,21 +197,39 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:checked="@={vpnLogin.noEnable}"
-                        android:text="否"
-                        />
+                        android:text="否" />
                 </RelativeLayout>
             </LinearLayout>
-            <Button
-                android:layout_marginTop="@dimen/dp_20"
-                android:id="@+id/bt_back"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/bt_back"
-                android:text="返回"
-                android:textColor="#fff"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/bt_back"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/bt_back"
+                    android:text="返回"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/bt_psd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/bt_back"
+                    android:text="获取动态密码"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

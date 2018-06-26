@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.agewnet.huambo.R;
 import com.agewnet.huambo.app.CommonConstant;
@@ -43,10 +46,19 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+
+        //Android5.0以上状态栏颜色修改
+        if(Build.VERSION.SDK_INT >= 21){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    |View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+
         //权限申请
         initPermission();
         initView();
     }
+
 
     /**
      * 动态权限申请
@@ -81,7 +93,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         mLoginBean = new LoginBean();
         mProgressDialog = new ProgressDialog(this);
         LoginBean tempLogin = (LoginBean) UserCache.getSingleton(this).getObject(CommonConstant.USER_LOGINCACHE, LoginBean.class);
-       // Log.d("", "initView: "+tempLogin.toString());
 
         if (null != tempLogin) {
             if (tempLogin.isRememberAccount()) {
@@ -94,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             mLoginBean.setPassWordIsVisible(false);
         }
         //是否为VPN登录
-        mLoginBean.setVPNLogin(false);
+        mLoginBean.setVPNLogin(true);
         mLoginPresenter.attach(this);
         mActivityLoginBinding.setPresenter(mLoginPresenter);
         //绑定LoginBean
@@ -130,22 +141,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
      */
     @Override
     public void onSuccess() {
-        Log.d("----------", "onSuccess: ------------111------");
+
         //记录密码       添加到本地缓存
         UserCache.getSingleton(this).putObject(CommonConstant.USER_LOGINCACHE, mLoginBean);
-        VPNLoginBean mVPNLoginBean = (VPNLoginBean) UserCache.getSingleton(this).getObject(CommonConstant.USER_VPN_LOGINCACHE, VPNLoginBean.class);
-        //Dialog
-        onDialogDismiss();
-        if (null != mVPNLoginBean) {
-            if (mVPNLoginBean.isEnable()) {
-                //starMainActivity(RequestApi.HUAMBO_VPN_MAIN);
-                starMainActivity(String.format(RequestApi.HUAMBO_MAIN_URL, mLoginBean.getUserName(), mLoginBean.getUserPass()));
-            } else {
-                starMainActivity(String.format(RequestApi.HUAMBO_MAIN_URL, mLoginBean.getUserName(), mLoginBean.getUserPass()));
-            }
-        } else {
-            starMainActivity(String.format(RequestApi.HUAMBO_MAIN_URL, mLoginBean.getUserName(), mLoginBean.getUserPass()));
-        }
+        starMainActivity(String.format(RequestApi.HUAMBO_MAIN_URL, mLoginBean.getUserName(), mLoginBean.getUserPass()));
     }
 
     /**
@@ -185,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         HuamBoApplication.getContext().initVpn().Login(new HuamBoApplication.VpnCallBack() {
             @Override
             public void onSuccess() {
-                mLoginPresenter.loginClient(mLoginBean);
+               mLoginPresenter.loginClient(mLoginBean);
             }
             @Override
             public void onError(String message) {
@@ -204,13 +203,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void clientLogin(LoginBean loginBean) {
         onShowDialog();
         VPNLoginBean mVPNLoginBean = (VPNLoginBean) UserCache.getSingleton(this).getObject(CommonConstant.USER_VPN_LOGINCACHE, VPNLoginBean.class);
+
         if (null != mLoginPresenter) {
             if (null != mVPNLoginBean) {
                 if (mVPNLoginBean.isEnable()) {
                     HuamBoApplication.getContext().initVpn().Login(new HuamBoApplication.VpnCallBack() {
                         @Override
                         public void onSuccess() {
-                           // mLoginPresenter.loginClient(mLoginBean);
                             Log.d("-----------------", "onSuccess: vpn登录？");
                             starMainActivity(String.format(RequestApi.HUAMBO_MAIN_URL, mLoginBean.getUserName(), mLoginBean.getUserPass()));
                         }
@@ -224,6 +223,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                     mLoginPresenter.loginClient(loginBean);
                 }
             } else {
+                Log.d("123", "clientLogin: 123");
                 mLoginPresenter.loginClient(loginBean);
             }
         }

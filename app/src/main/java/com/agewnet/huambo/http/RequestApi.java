@@ -6,17 +6,24 @@ package com.agewnet.huambo.http;
 
 public interface RequestApi {
     /**
-     * 服务器域名 http://19.108.192.125                       http://121.15.203.82:9210
+     * 服务器域名 http://19.108.192.125
+     * http://121.15.203.82:9210
      *
-     * http://120.86.117.106/DMS_Phone
+     * http://120.86.117.106
      *
+     http://121.15.203.82:9210/DMS_Phone/index.aspx
 
      http://sljoa.dg //水务局
-     http://www.dgluqiao.com/DMS_Phone
+     http://www.dgluqiao.com
 
      http://19.108.192.125//塘厦
+     kjjoa.dg//科技局
+     nyj.dg//农业局
+     http://19.104.9.233
+     http://19.111.48.16  东莞市滨海湾新区管委会智慧办公系统  dgsbhwxqgwh
+
      */
-    String BASE_URL = "http://19.108.192.125";
+    String BASE_URL = "http://sljoa.dg";
 
     /**
      * 登录路径
@@ -32,4 +39,5 @@ public interface RequestApi {
      */
     String HUAMBO_MAILLIST = "/DMS_Phone/Contact/ContactHandler.ashx?Action=GetContactByUserID&para={UserID:'%1$s'}";
 
+    String mobile = "";
 }

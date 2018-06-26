@@ -18,6 +18,14 @@ import com.google.gson.reflect.TypeToken;
 
 import net.arraynetworks.vpn.Common;
 
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * Created by Dumpling on 2017/10/19.
  *
@@ -34,18 +42,21 @@ public class LoginPresenter extends LoginContract.Presenter {
             ToolToast.success("密码有误,请你重新输入");
             return;
         }
-        ToolLOG.D(loginBean.toString());
+        Log.d("测试", "loginNameByPass: "+loginBean.toString());
         ((LoginContract.View) getView()).clientLogin(loginBean);
     }
 
     public void loginClient(LoginBean loginBean) {
+
         getHttpClient().setRequestUrl(String.format(RequestApi.HUAMBO_LOGIN_URL, loginBean.getUserName(), loginBean.getUserPass())).setResponseConver(new TypeToken<ResponseLoginBean>() {
         }.getType()).sendRequest(new RequestListener() {
             @Override
             public void Success(ResponesEntity responesEntity) {
                 ResponseLoginBean mResponseLoginBean = (ResponseLoginBean) responesEntity.getData();
+
                 if (null != mResponseLoginBean) {
                     if (mResponseLoginBean.isResult()) {
+
                         ((LoginContract.View) getView()).onSuccess();
                     } else {
                         ((LoginContract.View) getView()).onFailure(mResponseLoginBean.getMessage());
@@ -60,6 +71,24 @@ public class LoginPresenter extends LoginContract.Presenter {
                 ((LoginContract.View) getView()).onFailure(errorMessage);
             }
         });
+        /*String url = RequestApi.BASE_URL + String.format(RequestApi.HUAMBO_LOGIN_URL, loginBean.getUserName(), loginBean.getUserPass());
+        Log.d("地址", "loginClient: "+url);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("", "onFailure: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("", "onResponse: "+response.body().string());
+                ((LoginContract.View) getView()).onSuccess();
+            }
+        });*/
     }
 
     @Override
