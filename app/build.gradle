@@ -73,4 +73,5 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.0.8'
     compile 'cn.jiguang.sdk:jcore:1.1.6'
     testCompile 'junit:junit:4.12'
+    implementation files('libs/iAppOfficeServer_V1.0.0.2.jar')
 }

@@ -23,7 +23,7 @@ public interface RequestApi {
      http://19.111.48.16  东莞市滨海湾新区管委会智慧办公系统  dgsbhwxqgwh
 
      */
-    String BASE_URL = "http://sljoa.dg";
+    String BASE_URL = "http://121.15.203.82:9210";
 
     /**
      * 登录路径
